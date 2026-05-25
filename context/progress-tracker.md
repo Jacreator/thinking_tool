@@ -4,7 +4,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 02 (pending spec)
+- Feature 03 (pending spec)
 
 ## Current Goal
 
@@ -14,6 +14,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 - Cleaned up Next.js boilerplate (stripped globals.css, removed SVGs, replaced page.tsx with minimal shell)
 - Feature 01: Design system — shadcn/ui initialized (Tailwind v4 compatible), all 7 UI primitive components added (Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea), lucide-react installed, lib/utils.ts cn() helper created, globals.css updated with dark-only theme and project design tokens
+- Feature 02: Editor chrome — EditorNavbar (fixed top bar, sidebar toggle with PanelLeftOpen/PanelLeftClose, z-40) and ProjectSidebar (floating overlay, slides from left, Tabs with My Projects/Shared placeholder states, New Project button) created in components/editor/; dialog pattern confirmed ready via existing shadcn Dialog with title/description/footer exports
 
 ## In Progress
 
