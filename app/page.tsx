@@ -4,8 +4,8 @@ import { redirect } from "next/navigation";
 export default async function Home() {
   const { userId } = await auth();
   if (userId) {
-    redirect("/editor");
+    redirect(process.env.NEXT_PUBLIC_EDITOR_URL!);
   } else {
-    redirect("/sign-in");
+    redirect(process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL!);
   }
 }

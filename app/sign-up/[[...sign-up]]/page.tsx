@@ -28,7 +28,7 @@ export default function SignUpPage() {
       <div className="hidden lg:flex flex-col w-1/2 bg-surface border-r border-surface-border relative">
         <div className="absolute top-8 left-10 flex items-center gap-2.5">
           <div className="h-8 w-8 rounded-xl bg-brand flex items-center justify-center shrink-0">
-            <span className="text-sm font-bold text-[#080809]">G</span>
+            <span className="text-sm font-bold text-primary-foreground">G</span>
           </div>
           <span className="text-copy-primary font-semibold text-sm">
             Ghost AI
