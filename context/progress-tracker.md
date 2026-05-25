@@ -4,7 +4,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Not started
+- Feature 02 (pending spec)
 
 ## Current Goal
 
@@ -12,7 +12,8 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Completed
 
-- None yet
+- Cleaned up Next.js boilerplate (stripped globals.css, removed SVGs, replaced page.tsx with minimal shell)
+- Feature 01: Design system — shadcn/ui initialized (Tailwind v4 compatible), all 7 UI primitive components added (Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea), lucide-react installed, lib/utils.ts cn() helper created, globals.css updated with dark-only theme and project design tokens
 
 ## In Progress
 
@@ -24,12 +25,17 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Open Questions
 
-- Add unresolved product or implementation questions here.
+- None yet.
 
 ## Architecture Decisions
 
-- Add decisions that affect the system design or data model.
+- Dark-only theme: no light mode. All colors defined as CSS custom properties in globals.css, mapped to Tailwind tokens via @theme inline.
+- shadcn/ui component files in components/ui/ are not to be modified after generation.
+- shadcn CSS vars (--background, --foreground, etc.) are set to dark theme values in :root — no .dark block needed.
+- Project design tokens (--bg-base, --text-primary, etc.) live alongside shadcn vars in :root and are exposed as Tailwind utilities via @theme inline (bg-base, text-copy-primary, border-surface-border, etc.).
 
 ## Session Notes
 
-- Add context needed to resume work in the next session.
+- Project is ghost-ai (Next.js 16, Tailwind v4, TypeScript strict mode).
+- globals.css uses @import "tailwindcss" + @import "tw-animate-css" + @import "shadcn/tailwind.css" (Tailwind v4 syntax, no tailwind.config.js).
+- shadcn version: 4.8.0. Components live in components/ui/.
