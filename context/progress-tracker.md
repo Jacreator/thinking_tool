@@ -4,7 +4,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 04 (pending spec)
+- Feature 05 (pending spec)
 
 ## Current Goal
 
@@ -16,6 +16,7 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 01: Design system — shadcn/ui initialized (Tailwind v4 compatible), all 7 UI primitive components added (Button, Card, Dialog, Input, Tabs, Textarea, ScrollArea), lucide-react installed, lib/utils.ts cn() helper created, globals.css updated with dark-only theme and project design tokens
 - Feature 02: Editor chrome — EditorNavbar (fixed top bar, sidebar toggle with PanelLeftOpen/PanelLeftClose, z-40) and ProjectSidebar (floating overlay, slides from left, Tabs with My Projects/Shared placeholder states, New Project button) created in components/editor/; dialog pattern confirmed ready via existing shadcn Dialog with title/description/footer exports
 - Feature 03: Auth — ClerkProvider wraps root layout with dark theme + CSS variable overrides (no hardcoded colors); two-panel sign-in/sign-up pages (left: logo/tagline/feature list on lg+, right: Clerk form); root `/` redirects authenticated → `/editor`, unauthenticated → `/sign-in`; UserButton added to EditorNavbar right section; proxy.ts uses env vars (NEXT_PUBLIC_CLERK_SIGN_IN_URL / NEXT_PUBLIC_CLERK_SIGN_UP_URL) for public route matching, all other routes protected by default
+- Feature 04: Project dialogs — editor home screen (heading, description, New Project button); Create/Rename/Delete dialogs; `useProjectDialogs` hook managing dialog/form/loading state; ProjectSidebar updated with project items (rename+delete actions for owned projects only, hidden for shared), mobile backdrop scrim; all wired to mock data (lib/mock-projects.ts); no API calls or persistence
 
 ## In Progress
 
