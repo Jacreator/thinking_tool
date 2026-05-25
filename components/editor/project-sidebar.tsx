@@ -17,7 +17,7 @@ function ProjectItem({ project, onRename, onDelete }: ProjectItemProps) {
     <div className="group flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-subtle">
       <span className="flex-1 truncate text-copy-secondary">{project.name}</span>
       {project.owned && (
-        <div className="flex shrink-0 gap-0.5 opacity-0 group-hover:opacity-100">
+        <div className="flex shrink-0 gap-0.5 opacity-0 group-hover:opacity-100 focus-within:opacity-100">
           <Button
             variant="ghost"
             size="icon-xs"

@@ -23,6 +23,7 @@ Clicking `New Project` should open the Create Project dialog.
 - project name input
 - live slug preview based on the name
 - preview updates as the user types
+- Enter submits
 
 ### Rename Project
 
