@@ -4,7 +4,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 05 (pending spec)
+- Feature 06 (pending spec)
 
 ## Current Goal
 
@@ -17,6 +17,7 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 02: Editor chrome — EditorNavbar (fixed top bar, sidebar toggle with PanelLeftOpen/PanelLeftClose, z-40) and ProjectSidebar (floating overlay, slides from left, Tabs with My Projects/Shared placeholder states, New Project button) created in components/editor/; dialog pattern confirmed ready via existing shadcn Dialog with title/description/footer exports
 - Feature 03: Auth — ClerkProvider wraps root layout with dark theme + CSS variable overrides (no hardcoded colors); two-panel sign-in/sign-up pages (left: logo/tagline/feature list on lg+, right: Clerk form); root `/` redirects authenticated → `/editor`, unauthenticated → `/sign-in`; UserButton added to EditorNavbar right section; proxy.ts uses env vars (NEXT_PUBLIC_CLERK_SIGN_IN_URL / NEXT_PUBLIC_CLERK_SIGN_UP_URL) for public route matching, all other routes protected by default
 - Feature 04: Project dialogs — editor home screen (heading, description, New Project button); Create/Rename/Delete dialogs; `useProjectDialogs` hook managing dialog/form/loading state; ProjectSidebar updated with project items (rename+delete actions for owned projects only, hidden for shared), mobile backdrop scrim; all wired to mock data (lib/mock-projects.ts); no API calls or persistence
+- Feature 05: Prisma models and config — `prisma/models/project.prisma` with `Project` and `ProjectCollaborator` models (status enum, cascade delete, indexes); `lib/prisma.ts` cached singleton branching on `prisma+postgres://` (accelerateUrl) vs direct (`@prisma/adapter-pg`); first migration `20260526215241_init` applied to cloud Prisma Postgres; `npm run build` passes
 
 ## In Progress
 
@@ -36,6 +37,9 @@ Update this file whenever the current phase, active feature, or implementation s
 - shadcn/ui component files in components/ui/ are not to be modified after generation.
 - shadcn CSS vars (--background, --foreground, etc.) are set to dark theme values in :root — no .dark block needed.
 - Project design tokens (--bg-base, --text-primary, etc.) live alongside shadcn vars in :root and are exposed as Tailwind utilities via @theme inline (bg-base, text-copy-primary, border-surface-border, etc.).
+- Prisma v7: `url` must NOT appear in `prisma/schema.prisma` — it lives in `prisma.config.ts` only. The IDE language server shows a spurious diagnostic about the missing url; ignore it.
+- `prisma.config.ts` reads `DIRECT_DATABASE_URL` first (direct TCP, needed for `migrate dev` shadow DB), falls back to `DATABASE_URL`. `.env` holds the direct cloud URL; `.env.local` holds the `prisma+postgres://` proxy URL for the app.
+- `lib/prisma.ts` branches: `prisma+postgres://` URL → `PrismaClient({ accelerateUrl })`, otherwise → `PrismaClient({ adapter: PrismaPg })`. Import path: `../app/generated/prisma/client`.
 
 ## Session Notes
 
