@@ -27,15 +27,17 @@ export function EditorNavbar({
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-40 flex items-center border-b border-surface-border bg-[#0b0b0d]",
-        showWorkspaceActions ? "h-16" : "h-12"
+        'fixed inset-x-0 top-0 z-40 flex items-center border-b border-surface-border bg-[#0b0b0d]',
+        showWorkspaceActions ? 'h-16' : 'h-12',
       )}
     >
       <div className="flex items-center px-4">
         <Button
           variant="ghost"
           size="icon-sm"
-          className={cn(showWorkspaceActions && "text-copy-muted hover:text-copy-primary")}
+          className={cn(
+            showWorkspaceActions && 'text-copy-muted hover:text-copy-primary',
+          )}
           onClick={onToggleSidebar}
         >
           {sidebarOpen ? (
@@ -52,7 +54,9 @@ export function EditorNavbar({
             {projectName}
           </h1>
           {subtitle && (
-            <p className="truncate text-xs leading-4 text-copy-faint">{subtitle}</p>
+            <p className="truncate text-xs leading-4 text-copy-faint">
+              {subtitle}
+            </p>
           )}
         </div>
       )}
@@ -72,7 +76,7 @@ export function EditorNavbar({
             <Button
               variant="default"
               size="sm"
-              className="gap-1.5 bg-brand px-3 text-primary-foreground hover:bg-brand/90"
+              className="hidden gap-1.5 bg-brand px-3 text-primary-foreground hover:bg-brand/90 lg:inline-flex"
               onClick={onToggleAiSidebar}
               aria-pressed={aiSidebarOpen}
               title="Toggle AI sidebar"
@@ -85,5 +89,5 @@ export function EditorNavbar({
         <UserButton />
       </div>
     </header>
-  )
+  );
 }

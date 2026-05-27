@@ -4,13 +4,17 @@ import type { ProjectSummary } from "@/lib/projects"
 
 export interface ClerkIdentity {
   userId: string
-  primaryEmail: string
+  primaryEmail: string | null
 }
 
 export interface ProjectAccessResult {
   project: ProjectSummary | null
   hasAccess: boolean
   isOwner: boolean
+}
+
+export function isValidCollaboratorEmail(email: string | null | undefined): email is string {
+  return typeof email === "string" && email.includes("@") && email.trim() === email
 }
 
 export async function getCurrentClerkIdentity(): Promise<ClerkIdentity | null> {
@@ -23,9 +27,12 @@ export async function getCurrentClerkIdentity(): Promise<ClerkIdentity | null> {
   const primaryEmail =
     user?.emailAddresses.find((email) => email.id === user.primaryEmailAddressId)?.emailAddress ??
     user?.emailAddresses[0]?.emailAddress ??
-    ""
+    null
 
-  return { userId, primaryEmail }
+  return {
+    userId,
+    primaryEmail: isValidCollaboratorEmail(primaryEmail) ? primaryEmail : null,
+  }
 }
 
 export async function checkProjectAccess(
@@ -38,11 +45,6 @@ export async function checkProjectAccess(
       id: true,
       name: true,
       ownerId: true,
-      collaborators: {
-        where: { email: identity.primaryEmail },
-        select: { id: true },
-        take: 1,
-      },
     },
   })
 
@@ -51,7 +53,12 @@ export async function checkProjectAccess(
   }
 
   const isOwner = project.ownerId === identity.userId
-  const isCollaborator = project.collaborators.length > 0
+  const isCollaborator =
+    !isOwner && isValidCollaboratorEmail(identity.primaryEmail)
+      ? (await prisma.projectCollaborator.count({
+          where: { projectId, email: identity.primaryEmail },
+        })) > 0
+      : false
 
   return {
     project: { id: project.id, name: project.name },
