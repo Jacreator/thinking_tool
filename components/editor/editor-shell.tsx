@@ -7,16 +7,24 @@ import { ProjectSidebar } from "./project-sidebar"
 import { CreateProjectDialog } from "./create-project-dialog"
 import { RenameProjectDialog } from "./rename-project-dialog"
 import { DeleteProjectDialog } from "./delete-project-dialog"
-import { useProjectDialogs } from "@/hooks/use-project-dialogs"
+import { useProjectActions } from "@/hooks/use-project-actions"
 import { Button } from "@/components/ui/button"
+import type { ProjectSummary } from "@/lib/projects"
 
-export function EditorShell() {
+interface EditorShellProps {
+  ownedProjects: ProjectSummary[]
+  sharedProjects: ProjectSummary[]
+}
+
+export function EditorShell({ ownedProjects, sharedProjects }: EditorShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const {
     dialog,
     selectedProject,
     formName,
+    roomIdPreview,
     isLoading,
+    error,
     openCreate,
     openRename,
     openDelete,
@@ -25,7 +33,7 @@ export function EditorShell() {
     handleCreate,
     handleRename,
     handleDelete,
-  } = useProjectDialogs()
+  } = useProjectActions()
 
   return (
     <div className="flex h-screen flex-col bg-base">
@@ -36,6 +44,8 @@ export function EditorShell() {
       <ProjectSidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
+        ownedProjects={ownedProjects}
+        sharedProjects={sharedProjects}
         onOpenCreate={openCreate}
         onOpenRename={openRename}
         onOpenDelete={openDelete}
@@ -59,7 +69,9 @@ export function EditorShell() {
       <CreateProjectDialog
         open={dialog === "create"}
         formName={formName}
+        roomIdPreview={roomIdPreview}
         isLoading={isLoading}
+        error={error}
         onNameChange={setFormName}
         onSubmit={handleCreate}
         onClose={closeDialog}
@@ -69,6 +81,7 @@ export function EditorShell() {
         project={selectedProject}
         formName={formName}
         isLoading={isLoading}
+        error={error}
         onNameChange={setFormName}
         onSubmit={handleRename}
         onClose={closeDialog}
@@ -77,6 +90,7 @@ export function EditorShell() {
         open={dialog === "delete"}
         project={selectedProject}
         isLoading={isLoading}
+        error={error}
         onConfirm={handleDelete}
         onClose={closeDialog}
       />

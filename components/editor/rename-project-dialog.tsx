@@ -10,13 +10,14 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import type { MockProject } from "@/lib/mock-projects"
+import type { ProjectSummary } from "@/lib/projects"
 
 interface RenameProjectDialogProps {
   open: boolean
-  project: MockProject | null
+  project: ProjectSummary | null
   formName: string
   isLoading: boolean
+  error: string | null
   onNameChange: (name: string) => void
   onSubmit: () => void
   onClose: () => void
@@ -27,6 +28,7 @@ export function RenameProjectDialog({
   project,
   formName,
   isLoading,
+  error,
   onNameChange,
   onSubmit,
   onClose,
@@ -44,16 +46,21 @@ export function RenameProjectDialog({
             </DialogDescription>
           )}
         </DialogHeader>
-        <Input
-          autoFocus
-          className="text-white"
-          placeholder="Project name"
-          value={formName}
-          onChange={(e) => onNameChange(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && canSubmit) onSubmit()
-          }}
-        />
+        <div className="flex flex-col gap-2">
+          <Input
+            autoFocus
+            className="text-white"
+            placeholder="Project name"
+            value={formName}
+            onChange={(e) => onNameChange(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && canSubmit) onSubmit()
+            }}
+          />
+          {error && (
+            <p className="text-xs text-error">{error}</p>
+          )}
+        </div>
         <DialogFooter showCloseButton>
           <Button disabled={!canSubmit} onClick={onSubmit}>
             Rename

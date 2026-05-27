@@ -1,4 +1,4 @@
-'use client';
+"use client"
 
 import {
   Dialog,
@@ -7,47 +7,35 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-
-function toSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
 interface CreateProjectDialogProps {
-  open: boolean;
-  formName: string;
-  isLoading: boolean;
-  onNameChange: (name: string) => void;
-  onSubmit: () => void;
-  onClose: () => void;
+  open: boolean
+  formName: string
+  roomIdPreview: string
+  isLoading: boolean
+  error: string | null
+  onNameChange: (name: string) => void
+  onSubmit: () => void
+  onClose: () => void
 }
 
 export function CreateProjectDialog({
   open,
   formName,
+  roomIdPreview,
   isLoading,
+  error,
   onNameChange,
   onSubmit,
   onClose,
 }: CreateProjectDialogProps) {
-  const slug = toSlug(formName);
-  const canSubmit = formName.trim().length > 0 && slug.length > 0 && !isLoading;
+  const canSubmit = formName.trim().length > 0 && roomIdPreview.length > 0 && !isLoading
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(isOpen) => {
-        if (!isOpen) onClose();
-      }}
-    >
+    <Dialog open={open} onOpenChange={(isOpen) => { if (!isOpen) onClose() }}>
       <DialogContent showCloseButton={false}>
         <DialogHeader>
           <DialogTitle className="text-primary">New Project</DialogTitle>
@@ -63,13 +51,16 @@ export function CreateProjectDialog({
             value={formName}
             onChange={(e) => onNameChange(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' && canSubmit) onSubmit();
+              if (e.key === "Enter" && canSubmit) onSubmit()
             }}
           />
           {formName.trim() && (
             <p className="font-mono text-xs text-copy-muted">
-              slug: <span className="text-copy-secondary">{slug || '…'}</span>
+              room: <span className="text-copy-secondary">{roomIdPreview || "…"}</span>
             </p>
+          )}
+          {error && (
+            <p className="text-xs text-error">{error}</p>
           )}
         </div>
         <DialogFooter showCloseButton>
@@ -79,5 +70,5 @@ export function CreateProjectDialog({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  );
+  )
 }
