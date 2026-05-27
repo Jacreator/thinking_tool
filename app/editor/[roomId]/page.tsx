@@ -28,6 +28,7 @@ export default async function EditorWorkspacePage({ params }: EditorWorkspacePag
       project={access.project}
       ownedProjects={owned}
       sharedProjects={shared}
+      isOwner={access.isOwner}
     />
   )
 }

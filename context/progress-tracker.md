@@ -4,11 +4,11 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 08 (complete)
+- Feature 09 (complete)
 
 ## Current Goal
 
-- None. Feature 08 delivered and verified.
+- None. Feature 09 delivered and verified.
 
 ## Completed
 
@@ -21,6 +21,7 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 06: Project REST API — `app/api/projects/route.ts` (GET list by owner, POST create with default name "Untitled Project"); `app/api/projects/[projectId]/route.ts` (PATCH rename, DELETE delete); 401 for unauthenticated, 403 for non-owner mutations; Clerk `isAuthenticated`/`userId` via `auth()` from `@clerk/nextjs/server`; `params` awaited as Promise per Next.js 16; no UI wiring
 - Feature 07: Wire editor home — `lib/projects.ts` server-side helper fetches owned + shared projects via Prisma; `app/editor/page.tsx` is now an async server component that passes real project lists to `EditorShell`; `hooks/use-project-actions.ts` manages dialog state and calls POST/PATCH/DELETE API routes (create slugifies name + random suffix as room ID, navigates to `/editor/[roomId]`; rename calls PATCH + refresh; delete calls DELETE + redirect if active else refresh); all dialogs and sidebar updated to use `ProjectSummary` type; `mock-projects.ts` and old `use-project-dialogs.ts` deleted; `npm run build` passes
 - Feature 08: Workspace shell — `app/editor/[roomId]/page.tsx` server component redirects unauthenticated users to `/sign-in`, uses `lib/project-access.ts` for Clerk identity + owner/collaborator access checks, renders `AccessDenied` for missing/unauthorized projects, and passes current project context into `EditorWorkspaceShell`; workspace layout includes project navbar title/subtitle, share/AI toggle actions, docked rounded ProjectSidebar with active cyan room highlight, framed grid canvas placeholder, right AI Copilot placeholder panel; `08-editor-workspace-shell.md` updated to capture the attached visual target; `npm run build` passes
+- Feature 09: Share dialog — workspace Share button opens `ShareDialog`; owners can invite/remove collaborators and copy the project link with `Copied!` feedback; collaborators can view the enriched collaborator list read-only; `app/api/projects/[projectId]/collaborators/route.ts` lists/invites/removes collaborators with server-side ownership checks for mutations and Clerk Backend API enrichment for display names/avatars; collaborator email lookups normalize and skip invalid/missing emails; `npm run build` passes
 
 ## In Progress
 

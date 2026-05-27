@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma"
-import { isValidCollaboratorEmail } from "@/lib/project-access"
+import { isValidCollaboratorEmail, normalizeCollaboratorEmail } from "@/lib/project-access"
 
 export interface ProjectSummary {
   id: string
@@ -20,12 +20,14 @@ export async function getProjectsForUser(
     return { owned: await ownedPromise, shared: [] }
   }
 
+  const collaboratorEmail = normalizeCollaboratorEmail(userEmail)
+
   const [owned, shared] = await Promise.all([
     ownedPromise,
     prisma.project.findMany({
       where: {
         ownerId: { not: userId },
-        collaborators: { some: { email: userEmail } },
+        collaborators: { some: { email: collaboratorEmail } },
       },
       orderBy: { createdAt: "desc" },
       select: { id: true, name: true },

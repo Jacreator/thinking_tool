@@ -17,6 +17,10 @@ export function isValidCollaboratorEmail(email: string | null | undefined): emai
   return typeof email === "string" && email.includes("@") && email.trim() === email
 }
 
+export function normalizeCollaboratorEmail(email: string): string {
+  return email.trim().toLowerCase()
+}
+
 export async function getCurrentClerkIdentity(): Promise<ClerkIdentity | null> {
   const { isAuthenticated, userId } = await auth()
   if (!isAuthenticated || !userId) {
@@ -31,7 +35,9 @@ export async function getCurrentClerkIdentity(): Promise<ClerkIdentity | null> {
 
   return {
     userId,
-    primaryEmail: isValidCollaboratorEmail(primaryEmail) ? primaryEmail : null,
+    primaryEmail: isValidCollaboratorEmail(primaryEmail)
+      ? normalizeCollaboratorEmail(primaryEmail)
+      : null,
   }
 }
 
@@ -56,7 +62,10 @@ export async function checkProjectAccess(
   const isCollaborator =
     !isOwner && isValidCollaboratorEmail(identity.primaryEmail)
       ? (await prisma.projectCollaborator.count({
-          where: { projectId, email: identity.primaryEmail },
+          where: {
+            projectId,
+            email: normalizeCollaboratorEmail(identity.primaryEmail),
+          },
         })) > 0
       : false
 
