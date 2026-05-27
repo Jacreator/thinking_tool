@@ -24,6 +24,7 @@ export function EditorShell({ ownedProjects, sharedProjects }: EditorShellProps)
     formName,
     roomIdPreview,
     isLoading,
+    error,
     openCreate,
     openRename,
     openDelete,
@@ -70,6 +71,7 @@ export function EditorShell({ ownedProjects, sharedProjects }: EditorShellProps)
         formName={formName}
         roomIdPreview={roomIdPreview}
         isLoading={isLoading}
+        error={error}
         onNameChange={setFormName}
         onSubmit={handleCreate}
         onClose={closeDialog}
@@ -79,6 +81,7 @@ export function EditorShell({ ownedProjects, sharedProjects }: EditorShellProps)
         project={selectedProject}
         formName={formName}
         isLoading={isLoading}
+        error={error}
         onNameChange={setFormName}
         onSubmit={handleRename}
         onClose={closeDialog}
@@ -87,6 +90,7 @@ export function EditorShell({ ownedProjects, sharedProjects }: EditorShellProps)
         open={dialog === "delete"}
         project={selectedProject}
         isLoading={isLoading}
+        error={error}
         onConfirm={handleDelete}
         onClose={closeDialog}
       />

@@ -16,6 +16,7 @@ interface CreateProjectDialogProps {
   formName: string
   roomIdPreview: string
   isLoading: boolean
+  error: string | null
   onNameChange: (name: string) => void
   onSubmit: () => void
   onClose: () => void
@@ -26,6 +27,7 @@ export function CreateProjectDialog({
   formName,
   roomIdPreview,
   isLoading,
+  error,
   onNameChange,
   onSubmit,
   onClose,
@@ -56,6 +58,9 @@ export function CreateProjectDialog({
             <p className="font-mono text-xs text-copy-muted">
               room: <span className="text-copy-secondary">{roomIdPreview || "…"}</span>
             </p>
+          )}
+          {error && (
+            <p className="text-xs text-error">{error}</p>
           )}
         </div>
         <DialogFooter showCloseButton>
