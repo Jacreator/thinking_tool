@@ -56,7 +56,9 @@ export function useProjectActions(activeProjectId?: string): UseProjectActionsRe
   const [error, setError] = useState<string | null>(null)
 
   const slug = useMemo(() => toSlug(formName), [formName])
-  const roomIdPreview = formName.trim() ? `${slug}-${suffix}` : ""
+  const roomIdPreview = formName.trim()
+    ? `${slug.slice(0, Math.max(0, 64 - (suffix.length + 1)))}-${suffix}`
+    : ""
 
   function openCreate() {
     setFormName("")
@@ -94,7 +96,8 @@ export function useProjectActions(activeProjectId?: string): UseProjectActionsRe
 
     try {
       for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-        const roomId = `${slug}-${currentSuffix}`
+        const trimmedSlug = slug.slice(0, Math.max(0, 64 - (currentSuffix.length + 1)))
+        const roomId = `${trimmedSlug}-${currentSuffix}`
         const res = await fetch("/api/projects", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
