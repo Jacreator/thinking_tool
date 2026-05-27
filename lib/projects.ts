@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import { isValidCollaboratorEmail } from "@/lib/project-access"
 
 export interface ProjectSummary {
   id: string
@@ -7,14 +8,20 @@ export interface ProjectSummary {
 
 export async function getProjectsForUser(
   userId: string,
-  userEmail: string
+  userEmail: string | null
 ): Promise<{ owned: ProjectSummary[]; shared: ProjectSummary[] }> {
+  const ownedPromise = prisma.project.findMany({
+    where: { ownerId: userId },
+    orderBy: { createdAt: "desc" },
+    select: { id: true, name: true },
+  })
+
+  if (!isValidCollaboratorEmail(userEmail)) {
+    return { owned: await ownedPromise, shared: [] }
+  }
+
   const [owned, shared] = await Promise.all([
-    prisma.project.findMany({
-      where: { ownerId: userId },
-      orderBy: { createdAt: "desc" },
-      select: { id: true, name: true },
-    }),
+    ownedPromise,
     prisma.project.findMany({
       where: {
         ownerId: { not: userId },
