@@ -141,8 +141,13 @@ export function ShareDialog({
 
   async function handleCopyLink() {
     if (!projectUrl) return
-    await navigator.clipboard.writeText(projectUrl)
-    setCopied(true)
+    try {
+      await navigator.clipboard.writeText(projectUrl)
+      setCopied(true)
+      setError(null)
+    } catch {
+      setError("Failed to copy link")
+    }
   }
 
   return (
@@ -168,6 +173,7 @@ export function ShareDialog({
             <div className="flex gap-2">
               <Input
                 type="email"
+                className="text-white"
                 placeholder="teammate@example.com"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
