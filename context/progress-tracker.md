@@ -4,11 +4,11 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 06 (pending spec)
+- Feature 07 (complete)
 
 ## Current Goal
 
-- Define the immediate implementation goal here
+- None. Feature 07 delivered and verified.
 
 ## Completed
 
@@ -18,6 +18,8 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 03: Auth — ClerkProvider wraps root layout with dark theme + CSS variable overrides (no hardcoded colors); two-panel sign-in/sign-up pages (left: logo/tagline/feature list on lg+, right: Clerk form); root `/` redirects authenticated → `/editor`, unauthenticated → `/sign-in`; UserButton added to EditorNavbar right section; proxy.ts uses env vars (NEXT_PUBLIC_CLERK_SIGN_IN_URL / NEXT_PUBLIC_CLERK_SIGN_UP_URL) for public route matching, all other routes protected by default
 - Feature 04: Project dialogs — editor home screen (heading, description, New Project button); Create/Rename/Delete dialogs; `useProjectDialogs` hook managing dialog/form/loading state; ProjectSidebar updated with project items (rename+delete actions for owned projects only, hidden for shared), mobile backdrop scrim; all wired to mock data (lib/mock-projects.ts); no API calls or persistence
 - Feature 05: Prisma models and config — `prisma/models/project.prisma` with `Project` and `ProjectCollaborator` models (status enum, cascade delete, indexes); `lib/prisma.ts` cached singleton branching on `prisma+postgres://` (accelerateUrl) vs direct (`@prisma/adapter-pg`); first migration `20260526215241_init` applied to cloud Prisma Postgres; `npm run build` passes
+- Feature 06: Project REST API — `app/api/projects/route.ts` (GET list by owner, POST create with default name "Untitled Project"); `app/api/projects/[projectId]/route.ts` (PATCH rename, DELETE delete); 401 for unauthenticated, 403 for non-owner mutations; Clerk `isAuthenticated`/`userId` via `auth()` from `@clerk/nextjs/server`; `params` awaited as Promise per Next.js 16; no UI wiring
+- Feature 07: Wire editor home — `lib/projects.ts` server-side helper fetches owned + shared projects via Prisma; `app/editor/page.tsx` is now an async server component that passes real project lists to `EditorShell`; `hooks/use-project-actions.ts` manages dialog state and calls POST/PATCH/DELETE API routes (create slugifies name + random suffix as room ID, navigates to `/editor/[roomId]`; rename calls PATCH + refresh; delete calls DELETE + redirect if active else refresh); all dialogs and sidebar updated to use `ProjectSummary` type; `mock-projects.ts` and old `use-project-dialogs.ts` deleted; `npm run build` passes
 
 ## In Progress
 
