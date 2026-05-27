@@ -7,6 +7,7 @@ import { ProjectSidebar } from "./project-sidebar"
 import { CreateProjectDialog } from "./create-project-dialog"
 import { RenameProjectDialog } from "./rename-project-dialog"
 import { DeleteProjectDialog } from "./delete-project-dialog"
+import { ShareDialog } from "./share-dialog"
 import { useProjectActions } from "@/hooks/use-project-actions"
 import type { ProjectSummary } from "@/lib/projects"
 
@@ -14,15 +15,18 @@ interface EditorWorkspaceShellProps {
   project: ProjectSummary
   ownedProjects: ProjectSummary[]
   sharedProjects: ProjectSummary[]
+  isOwner: boolean
 }
 
 export function EditorWorkspaceShell({
   project,
   ownedProjects,
   sharedProjects,
+  isOwner,
 }: EditorWorkspaceShellProps) {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [aiSidebarOpen, setAiSidebarOpen] = useState(true)
+  const [shareOpen, setShareOpen] = useState(false)
   const {
     dialog,
     selectedProject,
@@ -49,6 +53,7 @@ export function EditorWorkspaceShell({
         subtitle="Workspace"
         aiSidebarOpen={aiSidebarOpen}
         onToggleAiSidebar={() => setAiSidebarOpen((o) => !o)}
+        onOpenShare={() => setShareOpen(true)}
         showWorkspaceActions
       />
 
@@ -159,6 +164,13 @@ export function EditorWorkspaceShell({
         error={error}
         onConfirm={handleDelete}
         onClose={closeDialog}
+      />
+      <ShareDialog
+        open={shareOpen}
+        projectId={project.id}
+        projectName={project.name}
+        canManage={isOwner}
+        onClose={() => setShareOpen(false)}
       />
     </div>
   )

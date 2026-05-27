@@ -13,6 +13,7 @@ interface EditorNavbarProps {
   showWorkspaceActions?: boolean
   aiSidebarOpen?: boolean
   onToggleAiSidebar?: () => void
+  onOpenShare?: () => void
 }
 
 export function EditorNavbar({
@@ -23,6 +24,7 @@ export function EditorNavbar({
   showWorkspaceActions = false,
   aiSidebarOpen = false,
   onToggleAiSidebar,
+  onOpenShare,
 }: EditorNavbarProps) {
   return (
     <header
@@ -68,6 +70,7 @@ export function EditorNavbar({
               variant="ghost"
               size="sm"
               className="gap-1.5 bg-black/30 px-3 text-copy-secondary hover:bg-subtle hover:text-copy-primary"
+              onClick={onOpenShare}
               title="Share"
             >
               <Share2 className="size-4" />
