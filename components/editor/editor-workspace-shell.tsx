@@ -1,13 +1,14 @@
 "use client"
 
 import { useState } from "react"
-import { Bot, Compass, Sparkles } from "lucide-react"
+import { Bot, Sparkles } from "lucide-react"
 import { EditorNavbar } from "./editor-navbar"
 import { ProjectSidebar } from "./project-sidebar"
 import { CreateProjectDialog } from "./create-project-dialog"
 import { RenameProjectDialog } from "./rename-project-dialog"
 import { DeleteProjectDialog } from "./delete-project-dialog"
 import { ShareDialog } from "./share-dialog"
+import { CanvasRoom } from "@/components/canvas/canvas-room"
 import { useProjectActions } from "@/hooks/use-project-actions"
 import type { ProjectSummary } from "@/lib/projects"
 
@@ -71,28 +72,8 @@ export function EditorWorkspaceShell({
         />
 
         <main className="flex min-w-0 flex-1 gap-3">
-          <section className="relative flex min-w-0 flex-1 items-center justify-center overflow-hidden rounded-3xl border border-surface-border bg-[#0b0b0f] p-8">
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:96px_96px]" />
-            <div className="absolute left-1/2 top-0 h-72 w-[48rem] -translate-x-1/2 rounded-full bg-brand/10 blur-3xl" />
-            <div className="absolute bottom-0 right-0 h-80 w-[34rem] rounded-full bg-ai/[0.14] blur-3xl" />
-            <div className="relative flex max-w-2xl flex-col items-center gap-6 text-center">
-              <div className="flex size-20 items-center justify-center rounded-3xl border border-white/10 bg-white/[0.04] shadow-[0_0_40px_rgba(0,200,212,0.08)]">
-                <Compass className="size-9 text-brand drop-shadow-[0_0_14px_rgba(0,200,212,0.65)]" />
-              </div>
-              <div className="space-y-5">
-                <p className="text-xs font-semibold tracking-[0.45em] text-copy-faint">
-                  WORKSPACE SHELL
-                </p>
-                <h1 className="text-balance text-3xl font-semibold leading-tight text-copy-primary md:text-4xl">
-                  Canvas and collaboration tooling land here next.
-                </h1>
-                <p className="mx-auto max-w-xl text-balance text-base font-medium leading-8 text-copy-muted">
-                  This room is ready for the shared architecture canvas, durable AI workflows, and
-                  real-time presence. For now, the shell is wired with project context and
-                  navigation only.
-                </p>
-              </div>
-            </div>
+          <section className="relative flex min-w-0 flex-1 overflow-hidden rounded-3xl border border-surface-border bg-[#0b0b0f]">
+            <CanvasRoom roomId={project.id} />
           </section>
 
           {aiSidebarOpen && (
