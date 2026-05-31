@@ -1,5 +1,6 @@
 import { PrismaClient } from "../app/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { normalizePostgresSslMode } from "./database-url";
 
 const url = process.env.DATABASE_URL ?? "";
 
@@ -7,7 +8,7 @@ function createClient(): PrismaClient {
   if (url.startsWith("prisma+postgres://")) {
     return new PrismaClient({ accelerateUrl: url });
   }
-  const adapter = new PrismaPg({ connectionString: url });
+  const adapter = new PrismaPg({ connectionString: normalizePostgresSslMode(url) });
   return new PrismaClient({ adapter });
 }
 
