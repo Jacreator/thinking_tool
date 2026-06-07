@@ -4,11 +4,11 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Current Phase
 
-- Feature 11 (complete)
+- Feature 12 (complete)
 
 ## Current Goal
 
-- None. Feature 11 delivered and verified.
+- None. Feature 12 delivered and verified.
 
 ## Completed
 
@@ -24,6 +24,7 @@ Update this file whenever the current phase, active feature, or implementation s
 - Feature 09: Share dialog — workspace Share button opens `ShareDialog`; owners can invite/remove collaborators and copy the project link with `Copied!` feedback; collaborators can view the enriched collaborator list read-only; `app/api/projects/[projectId]/collaborators/route.ts` lists/invites/removes collaborators with server-side ownership checks for mutations and Clerk Backend API enrichment for display names/avatars; collaborator email lookups normalize and skip invalid/missing emails; `npm run build` passes
 - Feature 10: Liveblocks setup — `liveblocks.config.ts` at project root defines `Presence` (cursor position + `isThinking`) and `UserMeta` (id, name, avatar, color) types; `lib/liveblocks.ts` exports cached `Liveblocks` node client and `getCursorColor(userId)` that deterministically maps a user ID to a fixed 10-color palette via hash; `POST /api/liveblocks-auth` requires Clerk auth, verifies project access via `checkProjectAccess`, creates room if absent via `getOrCreateRoom`, issues an access-token session with user name/avatar/cursor color; returns 403 for unauthorized access; `@liveblocks/node`, `@liveblocks/client`, `@liveblocks/react` installed; `LIVEBLOCKS_SECRET_KEY` placeholder added to `.env.local`; `npm run build` passes
 - Feature 11: Base canvas — `types/canvas.ts` defines `NodeData` (label/color/shape), `CanvasNode`, `CanvasEdge`, `NODE_COLORS` (8 dark palette pairs), `NODE_SHAPES` (6 shapes), `DEFAULT_NODE_COLOR`; `liveblocks.config.ts` Storage updated with `flow: LiveblocksFlow` key; `components/canvas/canvas-room.tsx` client wrapper sets up `LiveblocksProvider` + `RoomProvider` (initialPresence cursor/isThinking, initialStorage with LiveObject/LiveMap flow structure) + `ClientSideSuspense` loading spinner + inline `CanvasErrorBoundary` error fallback; `components/canvas/canvas-flow.tsx` uses `useLiveblocksFlow({ suspense: true })` with empty initial nodes/edges, renders `ReactFlow` with `ConnectionMode.Loose`, `fitView`, dot-pattern `Background`, styled `MiniMap`, `Cursors`; `editor-workspace-shell.tsx` placeholder replaced with `<CanvasRoom roomId={project.id} />`; `npm run build` passes
+- Feature 12: Shape panel — `components/canvas/canvas-flow.tsx` now wraps the canvas in `ReactFlowProvider`, adds a floating bottom-center rounded toolbar with draggable lucide icon buttons for rectangle, diamond, circle, pill, cylinder, and hexagon; drag payloads include shape plus default width/height; canvas dragover/drop logic reads and validates payloads, converts screen coordinates with `screenToFlowPosition`, generates IDs from shape/timestamp/counter, and creates Liveblocks-backed `canvasNode` entries through `onNodesChange`; basic custom node renderer displays dropped nodes as bordered rectangles with centered labels and hover connection handles; `npm run build` passes
 
 ## In Progress
 
@@ -31,7 +32,7 @@ Update this file whenever the current phase, active feature, or implementation s
 
 ## Next Up
 
-- Feature 12 (TBD).
+- Feature 13 (TBD).
 
 ## Open Questions
 
